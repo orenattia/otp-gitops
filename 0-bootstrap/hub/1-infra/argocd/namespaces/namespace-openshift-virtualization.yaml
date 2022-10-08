@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: namespace-openshift-virtualization
+  labels:
+    gitops.tier.layer: infra
+    gitops.tier.group: kubevirt
+  annotations:
+    argocd.argoproj.io/sync-wave: "100"
+spec:
+  destination:
+    namespace: openshift-cnv
+    server: https://kubernetes.default.svc
+  project: infra
+  source:
+    path: namespaces/openshift-virtualization
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
